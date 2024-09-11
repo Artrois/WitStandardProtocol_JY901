@@ -1,0 +1,6 @@
+﻿  Com.cpp
+  Main.cpp
+  Generating Code...
+  wit_c_sdk.c
+C:\Private\myprojects\slew_bearing_analyzer\HWT901B-TTL-Matlab\C++\NORMAL_WIN_CPP\wit_c_sdk.c(181,35): warning C4018: '<': signed/unsigned mismatch
+  WitSimulate.vcxproj -> C:\Private\myprojects\slew_bearing_analyzer\HWT901B-TTL-Matlab\C++\NORMAL_WIN_CPP\Debug\WitSimulate.exe

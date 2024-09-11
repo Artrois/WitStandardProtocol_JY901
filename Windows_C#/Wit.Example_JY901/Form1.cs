@@ -222,23 +222,54 @@ namespace Wit.Example_JY901
         private string GetDeviceData(JY901 JY901)
         {
             StringBuilder builder = new StringBuilder();
+            //String builder = "";
+   
+           
             builder.Append(JY901.GetDeviceName()).Append("\n");
             // 加速度  ACC
-            builder.Append("AccX").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AccX)).Append("g \t");
-            builder.Append("AccY").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AccY)).Append("g \t");
-            builder.Append("AccZ").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AccZ)).Append("g \n");
+            String AccX = JY901.GetDeviceData(WitSensorKey.AccX).ToString();
+            String AccY = JY901.GetDeviceData(WitSensorKey.AccY).ToString();
+            String AccZ = JY901.GetDeviceData(WitSensorKey.AccZ).ToString();
+            lblAccX.Text = AccX + "g";
+            lblAccY.Text = AccY + "g";
+            lblAccZ.Text = AccZ + "g";
+            builder.Append("AccX").Append(":").Append(AccX).Append("g \t");
+            builder.Append("AccY").Append(":").Append(AccY).Append("g \t");
+            builder.Append("AccZ").Append(":").Append(AccZ).Append("g \n");
+
+
             // 角速度  Angular velocity
-            builder.Append("GyroX").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AsX)).Append("°/s \t");
-            builder.Append("GyroY").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AsY)).Append("°/s \t");
-            builder.Append("GyroZ").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AsZ)).Append("°/s \n");
+            String GyroX = JY901.GetDeviceData(WitSensorKey.AsX).ToString();
+            String GyroY = JY901.GetDeviceData(WitSensorKey.AsY).ToString();
+            String GyroZ = JY901.GetDeviceData(WitSensorKey.AsZ).ToString();
+            lblGyroX.Text = GyroX + "°/s";
+            lblGyroY.Text = GyroY + "°/s";
+            lblGyroZ.Text = GyroZ + "°/s";
+            builder.Append("GyroX").Append(":").Append(GyroX).Append("°/s \t");
+            builder.Append("GyroY").Append(":").Append(GyroY).Append("°/s \t");
+            builder.Append("GyroZ").Append(":").Append(GyroZ).Append("°/s \n");
+
             // 角度   Angle
-            builder.Append("AngleX").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AngleX)).Append("° \t");
-            builder.Append("AngleY").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AngleY)).Append("° \t");
-            builder.Append("AngleZ").Append(":").Append(JY901.GetDeviceData(WitSensorKey.AngleZ)).Append("° \n");
+            String AngleX = JY901.GetDeviceData(WitSensorKey.AngleX).ToString();
+            String AngleY = JY901.GetDeviceData (WitSensorKey.AngleY).ToString();
+            String AngleZ = JY901.GetDeviceData(WitSensorKey.AngleY).ToString();
+            lblAngleX.Text = AngleX + "°";
+            lblAngleY.Text = AngleY + "°";
+            lblAngleZ.Text = AngleZ + "°";
+            builder.Append("AngleX").Append(":").Append(AngleX).Append("° \t");
+            builder.Append("AngleY").Append(":").Append(AngleY).Append("° \t");
+            builder.Append("AngleZ").Append(":").Append(AngleZ).Append("° \n");
+
             // 磁场   Mag
-            builder.Append("MagX").Append(":").Append(JY901.GetDeviceData(WitSensorKey.HX)).Append("uT \t");
-            builder.Append("MagY").Append(":").Append(JY901.GetDeviceData(WitSensorKey.HY)).Append("uT \t");
-            builder.Append("MagZ").Append(":").Append(JY901.GetDeviceData(WitSensorKey.HZ)).Append("uT \n");
+            String MagX = JY901.GetDeviceData(WitSensorKey.HX).ToString();
+            String MagY = JY901.GetDeviceData(WitSensorKey.HX).ToString();
+            String MagZ = JY901.GetDeviceData(WitSensorKey.HZ).ToString();
+            lblMagX.Text = MagX + "uT";
+            lblMagY.Text = MagY + "uT";
+            lblMagZ.Text = MagZ + "uT";
+            builder.Append("MagX").Append(":").Append(MagX).Append("uT \t");
+            builder.Append("MagY").Append(":").Append(MagY).Append("uT \t");
+            builder.Append("MagZ").Append(":").Append(MagZ).Append("uT \n");
             // 经纬度  Longitude and latitude
             builder.Append("Lon").Append(":").Append(JY901.GetDeviceData(WitSensorKey.Lon)).Append("′ \t");
             builder.Append("Lat").Append(":").Append(JY901.GetDeviceData(WitSensorKey.Lat)).Append("′ \n");
@@ -255,8 +286,11 @@ namespace Wit.Example_JY901
             // 气压   Barometric 
             builder.Append("P").Append(":").Append(JY901.GetDeviceData(WitSensorKey.Q1)).Append("Pa \t");
             builder.Append("H").Append(":").Append(JY901.GetDeviceData(WitSensorKey.Q2)).Append("m \t");
+            
             // 温度  Temp
-            builder.Append("T").Append(":").Append(JY901.GetDeviceData(WitSensorKey.T)).Append("℃ \n");
+            String temp = JY901.GetDeviceData(WitSensorKey.T).ToString();
+            lblTemp.Text = temp + "℃";
+            builder.Append("T").Append(":").Append(temp).Append("℃ \n");
             // GPS
             builder.Append("GPSHeight").Append(":").Append(JY901.GetDeviceData(WitSensorKey.GPSHeight)).Append(" m \t");
             builder.Append("GPSYaw").Append(":").Append(JY901.GetDeviceData(WitSensorKey.GPSYaw)).Append("° \t");
@@ -266,7 +300,9 @@ namespace Wit.Example_JY901
             builder.Append("VDOP").Append(":").Append(JY901.GetDeviceData(WitSensorKey.VDOP)).Append("\t");
             builder.Append("HDOP").Append(":").Append(JY901.GetDeviceData(WitSensorKey.HDOP)).Append("\n");
             // 版本号  Version
-            builder.Append("VersionNumber").Append(":").Append(JY901.GetDeviceData(WitSensorKey.VersionNumber)).Append("\n");
+            String ver = JY901.GetDeviceData(WitSensorKey.VersionNumber);
+            lblVer.Text = ver;
+            builder.Append("VersionNumber").Append(":").Append(ver).Append("\n");
             return builder.ToString();
         }
 

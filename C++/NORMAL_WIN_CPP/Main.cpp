@@ -26,7 +26,7 @@ static void DelayMs(uint16_t ms);
 void main(void)
 {	
 	float a[3],w[3],Angle[3],h[3];
-	printf("Please enter the serial number:");
+	printf("Please enter the serial port number:");
 	scanf_s("%d",&iComPort);
 	
 	OpenCOMDevice(iComPort,iBaud);

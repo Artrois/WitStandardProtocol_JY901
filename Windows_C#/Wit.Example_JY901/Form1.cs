@@ -252,7 +252,7 @@ namespace Wit.Example_JY901
             // 角度   Angle
             String AngleX = JY901.GetDeviceData(WitSensorKey.AngleX).ToString();
             String AngleY = JY901.GetDeviceData (WitSensorKey.AngleY).ToString();
-            String AngleZ = JY901.GetDeviceData(WitSensorKey.AngleY).ToString();
+            String AngleZ = JY901.GetDeviceData(WitSensorKey.AngleZ).ToString();
             lblAngleX.Text = AngleX + "°";
             lblAngleY.Text = AngleY + "°";
             lblAngleZ.Text = AngleZ + "°";
@@ -262,7 +262,7 @@ namespace Wit.Example_JY901
 
             // 磁场   Mag
             String MagX = JY901.GetDeviceData(WitSensorKey.HX).ToString();
-            String MagY = JY901.GetDeviceData(WitSensorKey.HX).ToString();
+            String MagY = JY901.GetDeviceData(WitSensorKey.HY).ToString();
             String MagZ = JY901.GetDeviceData(WitSensorKey.HZ).ToString();
             lblMagX.Text = MagX + "uT";
             lblMagY.Text = MagY + "uT";

@@ -1,48 +1,48 @@
 clear all;
 close all;
 instrreset;
-disp('Press Ctrl+C to stop collecting data!')              %°´Ctrl+C,ÖÕÖ¹Êý¾ÝµÄ»ñÈ¡
-s=serial('com3','baudrate',9600) ;fopen(s) ;               %Çë½«COM44»»³ÉµçÄÔÊ¶±ðµ½µÄCOM¿Ú£¬²¨ÌØÂÊ9600»»³É´«¸ÐÆ÷¶ÔÓ¦µÄ²¨ÌØÂÊ    Please replace COM44 with the COM port recognized by the PC, and change the baud rate 9600 to the baud rate corresponding to the sensor
+disp('Press Ctrl+C to stop collecting data!')              %ï¿½ï¿½Ctrl+C,ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ÝµÄ»ï¿½È¡
+s=serial('com8','baudrate',9600) ;fopen(s) ;               %ï¿½ë½«COM44ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½Ê¶ï¿½ðµ½µï¿½COMï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½9600ï¿½ï¿½ï¿½É´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½    Please replace COM44 with the COM port recognized by the PC, and change the baud rate 9600 to the baud rate corresponding to the sensor
 f = 20;         %DataFrequce
 t=0;
 cnt = 1;
-aa=[0 0 0];     %¼ÓËÙ¶ÈXYZ    Acceleration X, Y, Z axis
-ww=[0 0 0];     %½ÇËÙ¶ÈXYZ    Angular velocity X, Y, Z axis
-AA = [0 0 0];   %½Ç¶ÈXYZ      Angle X, Y, Z axis
+aa=[0 0 0];     %ï¿½ï¿½ï¿½Ù¶ï¿½XYZ    Acceleration X, Y, Z axis
+ww=[0 0 0];     %ï¿½ï¿½ï¿½Ù¶ï¿½XYZ    Angular velocity X, Y, Z axis
+AA = [0 0 0];   %ï¿½Ç¶ï¿½XYZ      Angle X, Y, Z axis
 tt = 0;
 a=[0 0 0]';
 w=[0 0 0]';
 A=[0 0 0]';
 while(1)
-    Head = fread(s,2,'uint8');                              %»ñÈ¡´®¿ÚÊý¾Ý£¬ÆäÖÐsÎÄ¼þ£¬ÒÑ¾­ÔÚÉÏÃæÌá¼°µ½  Getting serial data, the S file has been mentioned above
-    if (Head(1)~=uint8(85))                                 %Èç¹û´®¿ÚµÄµÚÒ»¸öÊý¾Ý²»µÈÓÚ85(0x55)£¬Ö¤Ã÷²»·ûºÏÐ­Òé£¬²»½øÐÐÊý¾Ý½âÎö  If the first data of the serial is not equal to 85 (0x55), it proves that it isn't conform to the protocol and haven't perform data analysis
+    Head = fread(s,2,'uint8');                              %ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¼°ï¿½ï¿½  Getting serial data, the S file has been mentioned above
+    if (Head(1)~=uint8(85))                                 %ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÚµÄµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½85(0x55)ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý½ï¿½ï¿½ï¿½  If the first data of the serial is not equal to 85 (0x55), it proves that it isn't conform to the protocol and haven't perform data analysis
         continue;
     end   
     Head(2)
-    switch(Head(2))                                         %»ñÈ¡´®¿ÚµÚ¶þ¸öÊý¾Ý   Getting the second data of the serial
-        case 81                                             %81(0x51):¼ÓËÙ¶È°ü   81(0x51): Acceleration data packet
-            a = fread(s,3,'int16')/32768*16;                %»ñÈ¡3¸ö16bitµÄ¼ÓËÙ¶ÈÊý¾Ý£¬Çë²Î¿¼Ð­ÒéËµÃ÷   Getting three 16bit acceleration data, please refer to the protocol
-        case 82                                             %82(0x52):½ÇËÙ¶È°ü   82 (0x52): Angular velocity data packet
-            w = fread(s,3,'int16')/32768*2000;              %»ñÈ¡3¸ö16bitµÄ½ÇËÙ¶ÈÊý¾Ý£¬Çë²Î¿¼Ð­ÒéËµÃ÷   Getting three 16bit angular velocity data, please refer to the protocol
-        case 83                                             %83(0x53):½Ç¶È°ü     83 (0x53): Angular data packet
-            A = fread(s,3,'int16')/32768*180;               %»ñÈ¡3¸ö16bitµÄ½Ç¶ÈÊý¾Ý£¬Çë²Î¿¼Ð­ÒéËµÃ÷     Getting three 16bit angle data, please refer to the protocol.
+    switch(Head(2))                                         %ï¿½ï¿½È¡ï¿½ï¿½ï¿½ÚµÚ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   Getting the second data of the serial
+        case 81                                             %81(0x51):ï¿½ï¿½ï¿½Ù¶È°ï¿½   81(0x51): Acceleration data packet
+            a = fread(s,3,'int16')/32768*16;                %ï¿½ï¿½È¡3ï¿½ï¿½16bitï¿½Ä¼ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Î¿ï¿½Ð­ï¿½ï¿½Ëµï¿½ï¿½   Getting three 16bit acceleration data, please refer to the protocol
+        case 82                                             %82(0x52):ï¿½ï¿½ï¿½Ù¶È°ï¿½   82 (0x52): Angular velocity data packet
+            w = fread(s,3,'int16')/32768*2000;              %ï¿½ï¿½È¡3ï¿½ï¿½16bitï¿½Ä½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Î¿ï¿½Ð­ï¿½ï¿½Ëµï¿½ï¿½   Getting three 16bit angular velocity data, please refer to the protocol
+        case 83                                             %83(0x53):ï¿½Ç¶È°ï¿½     83 (0x53): Angular data packet
+            A = fread(s,3,'int16')/32768*180;               %ï¿½ï¿½È¡3ï¿½ï¿½16bitï¿½Ä½Ç¶ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½Î¿ï¿½Ð­ï¿½ï¿½Ëµï¿½ï¿½     Getting three 16bit angle data, please refer to the protocol.
             aa = [aa;a'];
             ww = [ww;w'];
             AA = [AA;A'];
             tt = [tt;t];
             
             subplot(3,1,1);plot(tt,aa);title(['Acceleration = ' num2str(a') 'm2/s']);ylabel('m2/s');
-            subplot(3,1,2);plot(tt,ww);title(['Gyro = ' num2str(w') '¡ã/s']);ylabel('¡ã/s');
-            subplot(3,1,3);plot(tt,AA);title(['Angle = ' num2str(A') '¡ã']);ylabel('¡ã');              
+            subplot(3,1,2);plot(tt,ww);title(['Gyro = ' num2str(w') 'ï¿½ï¿½/s']);ylabel('ï¿½ï¿½/s');
+            subplot(3,1,3);plot(tt,AA);title(['Angle = ' num2str(A') 'ï¿½ï¿½']);ylabel('ï¿½ï¿½');              
             cnt=0;
             drawnow;
-            if (size(aa,1)>5*f)                              %Çå¿ÕÀúÊ·Êý¾Ý   Clear history data
+            if (size(aa,1)>5*f)                              %ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½ï¿½ï¿½   Clear history data
                 aa = aa(f:5*f,:);
                 ww = ww(f:5*f,:);
                 AA = AA(f:5*f,:);
                 tt = tt(f:5*f,:);
             end
-            t=t+0.1;                                         %Êý¾ÝÄ¬ÈÏÊÇ10Hz£¬Ò²¾ÍÊÇ0.1s£¬Èç¹û¸ü¸ÄÁË²úÆ·µÄÊä³öËÙÂÊ£¬Çë°Ñ0.1¸ÄÎªÆäËûÊä³öËÙÂÊ   The data default is 10Hz, which is 0.1s. If you change the output rate of the product, please change 0.1 to other output rates
+            t=t+0.1;                                         %ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½10Hzï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½0.1sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½0.1ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   The data default is 10Hz, which is 0.1s. If you change the output rate of the product, please change 0.1 to other output rates
     end 
         
             End = fread(s,3,'uint8');
